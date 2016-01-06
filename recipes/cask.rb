@@ -18,16 +18,6 @@
 #
 Chef::Resource.send(:include, Homebrew::Mixin)
 
-homebrew_tap 'caskroom/cask'
-
-package 'brew-cask'
-
-execute 'update homebrew cask from github' do
-  user node['homebrew']['owner'] || homebrew_owner
-  command '/usr/local/bin/brew upgrade brew-cask && /usr/local/bin/brew cask cleanup || true'
-  only_if { node['homebrew']['auto-update'] }
-end
-
 directory '/opt/homebrew-cask' do
   owner node['homebrew']['owner'] || homebrew_owner
   mode 00775
